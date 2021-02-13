@@ -6,12 +6,21 @@ class User {
   factory User.fromJson(Map<String, dynamic> json) => User(
     email: json['email'],
     name: json['name'],
-    password: json['password']
+    password: json['password'],
+    uuid: json['uuid'],
+    token: json['token']
   );
 
    Map<String, dynamic> toJson() => {
     'email': email,
     'name': name,
     'uuid': uuid
+  };
+   
+   Map<String, dynamic> toCustomJson() => {
+    'email': email,
+    'name': name,
+    'uuid': uuid,
+    'token': token
   };
 }

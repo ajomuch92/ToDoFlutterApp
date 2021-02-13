@@ -6,6 +6,7 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:get/get.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:todoapp/controllers/global_controller.dart';
 import 'package:todoapp/models/response_result.dart';
 import 'package:todoapp/models/user.dart';
 import 'package:todoapp/providers/user_provider.dart';
@@ -19,6 +20,7 @@ class IndexController extends GetxController {
   UserProvider _userProvider = UserProvider();
   RxBool _showPassword = false.obs;
   RxBool showPassword = false.obs;
+  GlobalController _globalController = Get.find();
 
   void showModalRegister() {
     showMaterialModalBottomSheet(
@@ -143,22 +145,36 @@ class IndexController extends GetxController {
   }
 
   void login() async {
-    // Get.off(Home());
-    ArsProgressDialog pr =
-        getLoadingDialog(context: Get.overlayContext, text: 'Loading...');
-    pr.show();
-    await Future.delayed(Duration(seconds: 3));
-    pr.dismiss();
-    showToast('Login', 'Login success', ToastType.Success);
+    if (formKey.currentState.saveAndValidate()) {
+      dynamic values = formKey.currentState.value;
+      User user = User.fromJson(values);
+      ArsProgressDialog pr = getLoadingDialog(context: Get.overlayContext, text: 'Sign In...');
+      pr.show();
+      ResponseResult result = await _userProvider.login(user);
+      pr.dismiss();
+      if(result.code == 200) {
+        _globalController.setUser(result.result);
+        Get.off(Home());
+      } else {
+        showToast('Register', result.message, ToastType.Error);
+      }
+    }
   }
 
   Future register() async {
     if (_registerFormKey.currentState.saveAndValidate()) {
       dynamic values = _registerFormKey.currentState.value;
       User user = User.fromJson(values);
+      ArsProgressDialog pr = getLoadingDialog(context: Get.overlayContext, text: 'Saving...');
+      pr.show();
       ResponseResult result = await _userProvider.register(user);
-      print(result.message);
-      Get.back();
+      pr.dismiss();
+      if(result.code == 200) {
+        Get.back();
+        showToast('Register', 'User registered success', ToastType.Success);
+      } else {
+        showToast('Register', result.message, ToastType.Error);
+      }
     }
   }
 }

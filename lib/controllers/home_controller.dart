@@ -1,21 +1,30 @@
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:simple_search_bar/simple_search_bar.dart';
+import 'package:todoapp/controllers/global_controller.dart';
+import 'package:todoapp/models/response_result.dart';
 import 'package:todoapp/models/task.dart';
+import 'package:todoapp/models/user.dart';
 import 'package:todoapp/providers/task_provider.dart';
+import 'package:todoapp/providers/user_provider.dart';
 import 'package:todoapp/utils/messages.dart';
 import 'package:todoapp/views/add_edit_task.dart';
 import 'package:todoapp/views/index.dart';
+import 'package:todoapp/utils/messages.dart';
 
 class HomeController extends GetxController {
   final AppBarController appBarController = AppBarController();
   final TaskProvider _taskProvider = TaskProvider();
   final PagingController<int, Task> pagingController = PagingController(firstPageKey: 0);
   final int _pageSize = 10;
+  UserProvider _userProvider = UserProvider();
+  GlobalController _globalController = Get.find();
+  User currentUser;
 
   @override
   void onInit() {
     super.onInit();
+    currentUser = _globalController.getUser();
     pagingController.addPageRequestListener((pageKey) {
       print(pageKey);
       _loadPage(pageKey);
@@ -39,8 +48,14 @@ class HomeController extends GetxController {
   }
 
   void logout() {
-    showConfirmDialog('Logout', 'Are you sure you want to logout?', () {
-      Get.off(Index());
+    showConfirmDialog('Logout', 'Are you sure you want to logout?', () async {
+      ResponseResult result = await _userProvider.logout();
+      if(result.code == 200) {
+        _globalController.deleteUser();
+        Get.off(Index());
+      }
+      else
+        showToast('Register', result.message, ToastType.Error);
     });
   }
 
