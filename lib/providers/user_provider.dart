@@ -20,16 +20,17 @@ class UserProvider {
       await _authInstance.createUserWithEmailAndPassword(email: user.email, password: user.password);
       user.uuid = _authInstance.currentUser.uid;
       user.token = await _authInstance.currentUser.getIdToken();
-      await _http.post('users',
-        data: user.toJson(),
-        options: Options(
-          responseType: ResponseType.json,
-          headers: {
-            HttpHeaders.authorizationHeader: 'Bearer ${user.token}',
-            HttpHeaders.contentTypeHeader: 'application/json'
-          }
-        )
-      );
+      await _authInstance.currentUser.updateProfile(displayName: user.name);
+      // await _http.post('collections/users',
+      //   data: user.toJson(),
+      //   options: Options(
+      //     responseType: ResponseType.json,
+      //     headers: {
+      //       HttpHeaders.authorizationHeader: 'Bearer ${user.token}',
+      //       HttpHeaders.contentTypeHeader: 'application/json'
+      //     }
+      //   )
+      // );
       await _authInstance.signOut();
       _result.code = 200;
       _result.message = 'The user was registered successfully';
