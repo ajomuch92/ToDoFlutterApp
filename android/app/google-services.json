@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "89690836363",
+    "project_id": "test-deskree",
+    "storage_bucket": "test-deskree.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:89690836363:android:3197fc426ebddc512af38e",
+        "android_client_info": {
+          "package_name": "com.deskree.test"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "89690836363-je90g2v9036a2irp5t6nc3fjps10retj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBytFrLdyxVKlMp5cn8ZcoyI6QIZwDaYWM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "89690836363-je90g2v9036a2irp5t6nc3fjps10retj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
