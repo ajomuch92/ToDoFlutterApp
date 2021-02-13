@@ -47,21 +47,27 @@ class Index extends StatelessWidget {
                           FormBuilderTextField(
                             name: 'email',
                             decoration: InputDecoration(
-                              labelText: 'Email',
-                              suffixIcon: Icon(FeatherIcons.mail)
+                              hintText: 'Email',
+                              suffixIcon: Icon(FeatherIcons.mail),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                              ),
                             ),
                             validator: FormBuilderValidators.compose([
                               FormBuilderValidators.required(context, errorText: 'This field is required'),
                             ]),
-                            
                             keyboardType: TextInputType.emailAddress,
                           ),
+                          SizedBox(height: 20,),
                           FormBuilderTextField(
                             name: 'password',
                             obscureText: true,
                             decoration: InputDecoration(
-                              labelText: 'Password',
-                              suffixIcon: Icon(FeatherIcons.eye)
+                              hintText: 'Password',
+                              suffixIcon: Icon(FeatherIcons.eye),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                              ),
                             ),
                             validator: FormBuilderValidators.compose([
                               FormBuilderValidators.required(context, errorText: 'This field is required'),
