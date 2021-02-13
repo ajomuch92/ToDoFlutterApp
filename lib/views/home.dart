@@ -58,14 +58,17 @@ class Home extends StatelessWidget {
                   onDeleteTap: (){
                     _.deleteTask();
                   },
-                  onEditTap: (){},
+                  onEditTap: (){
+                    _.editTaks(item);
+                  },
                 ),
               )
             ),
           ),
           floatingActionButton: FloatingActionButton(
+            backgroundColor: mainColor,
             child: Icon(FeatherIcons.plus),
-            onPressed: (){},
+            onPressed: _.newTask,
           ),
         );
       },
