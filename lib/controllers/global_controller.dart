@@ -6,11 +6,18 @@ class GlobalController extends GetxController {
   final GetStorage _storage = GetStorage('todo-app');
 
   void setUser(User user) {
-    _storage.write('user', user);
+    _storage.write('user', user.toCustomJson());
+  }
+
+  void deleteUser() {
+    _storage.remove('user');
   }
 
   User getUser() {
-    User _user = _storage.read<User>('user');
+    dynamic possibleUser = _storage.read('user');
+    User _user;
+    if(possibleUser != null)
+      _user = User.fromJson(possibleUser);
     return _user;
   }
 }

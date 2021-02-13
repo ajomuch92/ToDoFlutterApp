@@ -47,22 +47,30 @@ class Home extends StatelessWidget {
             ),
           ),
           body: Container(
-            child: PagedListView<int, Task>(
-              pagingController: _.pagingController, 
-              builderDelegate: PagedChildBuilderDelegate<Task>(
-                itemBuilder: (context, item, index) => TaskTile(
-                  task: item, 
-                  onTap: (){
-                    _.showDetails(item);
-                  },
-                  onDeleteTap: (){
-                    _.deleteTask();
-                  },
-                  onEditTap: (){
-                    _.editTaks(item);
-                  },
-                ),
-              )
+            child: Column(
+              children: [
+                Text('Welcome ${_.currentUser.name}', style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold), maxLines: 3,),
+                SizedBox(height: 10.0,),
+                Expanded(
+                  child: PagedListView<int, Task>(
+                    pagingController: _.pagingController, 
+                    builderDelegate: PagedChildBuilderDelegate<Task>(
+                      itemBuilder: (context, item, index) => TaskTile(
+                        task: item, 
+                        onTap: (){
+                          _.showDetails(item);
+                        },
+                        onDeleteTap: (){
+                          _.deleteTask();
+                        },
+                        onEditTap: (){
+                          _.editTaks(item);
+                        },
+                      ),
+                    )
+                  ),
+                )
+              ],
             ),
           ),
           floatingActionButton: FloatingActionButton(

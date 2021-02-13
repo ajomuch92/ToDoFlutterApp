@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:todoapp/models/response_result.dart';
 import 'package:todoapp/providers/adapter.dart';
 import 'package:todoapp/models/user.dart' as _User;
-import 'dart:io';
+// import 'dart:io';
 
 class UserProvider {
   Adapter _adapter = Adapter();
@@ -44,6 +44,40 @@ class UserProvider {
     } on DioError catch(error) {
       _result.code = error.response.statusCode;
       _result.message = error.message;
+    } catch (error) {
+      _result.code = 500;
+      _result.message = 'There was an error, please try later.';
+    }
+    return _result;
+  }
+
+  Future<ResponseResult> login(_User.User user) async{
+    try {
+      await _authInstance.signInWithEmailAndPassword(email: user.email, password: user.password);
+      user.uuid = _authInstance.currentUser.uid;
+      user.token = await _authInstance.currentUser.getIdToken();
+      user.name = _authInstance.currentUser.displayName;
+      _result.code = 200;
+      _result.result = user;
+    } on FirebaseAuthException catch (e) {
+      _result.code = 500;
+      _result.message = 'There was an error, please try later.';
+      _result.result = e.message;
+    } catch (error) {
+      _result.code = 500;
+      _result.message = 'There was an error, please try later.';
+    }
+    return _result;
+  }
+
+  Future<ResponseResult> logout() async{
+    try {
+      await _authInstance.signOut();
+      _result.code = 200;
+    } on FirebaseAuthException catch (e) {
+      _result.code = 500;
+      _result.message = 'There was an error, please try later.';
+      _result.result = e.message;
     } catch (error) {
       _result.code = 500;
       _result.message = 'There was an error, please try later.';
