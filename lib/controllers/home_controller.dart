@@ -4,6 +4,7 @@ import 'package:simple_search_bar/simple_search_bar.dart';
 import 'package:todoapp/models/task.dart';
 import 'package:todoapp/providers/task_provider.dart';
 import 'package:todoapp/utils/messages.dart';
+import 'package:todoapp/views/add_edit_task.dart';
 import 'package:todoapp/views/index.dart';
 
 class HomeController extends GetxController {
@@ -51,5 +52,13 @@ class HomeController extends GetxController {
 
   void showDetails(Task task) {
     showTaskDetail(task);
+  }
+
+  void newTask() {
+    Get.to(AddEditTaks());
+  }
+
+  void editTaks(Task task) {
+    Get.to(AddEditTaks(), arguments: {'task': task});
   }
 }

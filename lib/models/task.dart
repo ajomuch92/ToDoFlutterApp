@@ -12,4 +12,10 @@ class Task {
     finishedDate: DateTime.tryParse(json['finishedDate']),
     isComplete: json['isComplete'] as bool,
   );
+
+  Map<String, dynamic> toJson() => {
+    'description': description,
+    'title': title,
+    'isComplete': isComplete
+  };
 }
