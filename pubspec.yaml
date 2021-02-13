@@ -35,6 +35,7 @@ dependencies:
   flutter_dotenv: ^3.1.0
   firebase_core: ^0.7.0
   firebase_auth: ^0.20.0+1
+  cloud_firestore: ^0.16.0
   ars_progress_dialog: ^0.1.2
 
   # The following adds the Cupertino Icons font to your application.
