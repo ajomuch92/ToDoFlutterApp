@@ -77,7 +77,7 @@ class Index extends StatelessWidget {
                 SizedBox(
                   width: Get.width * 0.5,
                   child: GFButton(
-                    onPressed: (){},
+                    onPressed: _.login,
                     text: 'Log In',
                     shape: GFButtonShape.pills,
                     size: GFSize.LARGE,
