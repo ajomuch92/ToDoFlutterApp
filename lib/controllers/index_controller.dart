@@ -5,6 +5,7 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:get/get.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:todoapp/views/home.dart';
 
 class IndexController extends GetxController {
   final formKey = GlobalKey<FormBuilderState>();
@@ -94,5 +95,9 @@ class IndexController extends GetxController {
           ),
         );
       });
+  }
+
+  void login() {
+    Get.off(Home());
   }
 }
