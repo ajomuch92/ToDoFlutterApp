@@ -42,7 +42,8 @@ class AddEditTaks extends StatelessWidget {
                       validator: FormBuilderValidators.compose([
                         FormBuilderValidators.required(context, errorText: 'This field is required'),
                       ]),
-                      keyboardType: TextInputType.text
+                      keyboardType: TextInputType.name,
+                      textInputAction: TextInputAction.next,
                     ),
                     SizedBox(height: 20,),
                     FormBuilderTextField(
@@ -58,7 +59,7 @@ class AddEditTaks extends StatelessWidget {
                       validator: FormBuilderValidators.compose([
                         FormBuilderValidators.required(context, errorText: 'This field is required'),
                       ]),
-                      keyboardType: TextInputType.text
+                      keyboardType: TextInputType.text,
                     ),
                     FormBuilderCheckbox(
                       name: 'isComplete',
