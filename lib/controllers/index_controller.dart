@@ -156,7 +156,7 @@ class IndexController extends GetxController {
         _globalController.setUser(result.result);
         Get.off(Home());
       } else {
-        showToast('Register', result.message, ToastType.Error);
+        showToast('Login', result.message, ToastType.Error);
       }
     }
   }

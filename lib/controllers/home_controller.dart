@@ -19,6 +19,7 @@ class HomeController extends GetxController {
   final int _pageSize = 10;
   UserProvider _userProvider = UserProvider();
   GlobalController _globalController = Get.find();
+  List<Task> _originalList = [];
   User currentUser;
 
   @override
@@ -33,14 +34,19 @@ class HomeController extends GetxController {
 
   Future<void> _loadPage(int pageKey) async {
     try {
-      print('Loading page');
-      final newItems = await _taskProvider.getTasks('', pageKey, _pageSize);
-      final isLastPage = newItems.length < _pageSize;
-      if (isLastPage) {
-        pagingController.appendLastPage(newItems);
+      ResponseResult result = await _taskProvider.getTasksV2(currentUser, pageKey, _pageSize);
+      if(result.code == 200) {
+        List<Task> newItems = result.result as List<Task>;
+        final isLastPage = newItems.length < _pageSize;
+        _originalList.addAll(newItems);
+        if (isLastPage) {
+          pagingController.appendLastPage(newItems);
+        } else {
+          final nextPageKey = pageKey + newItems.length;
+          pagingController.appendPage(newItems, nextPageKey);
+        }
       } else {
-        final nextPageKey = pageKey + newItems.length;
-        pagingController.appendPage(newItems, nextPageKey);
+        pagingController.error = result.message;
       }
     } catch (error) {
       pagingController.error = error;
