@@ -39,6 +39,7 @@ class AddEditTaks extends StatelessWidget {
                           borderRadius: BorderRadius.all(Radius.circular(20.0)),
                         ),
                       ),
+                      enabled: !_.task.isComplete,
                       validator: FormBuilderValidators.compose([
                         FormBuilderValidators.required(context, errorText: 'This field is required'),
                       ]),
@@ -56,6 +57,7 @@ class AddEditTaks extends StatelessWidget {
                           borderRadius: BorderRadius.all(Radius.circular(20.0)),
                         ),
                       ),
+                      enabled: !_.task.isComplete,
                       validator: FormBuilderValidators.compose([
                         FormBuilderValidators.required(context, errorText: 'This field is required'),
                       ]),
@@ -63,6 +65,7 @@ class AddEditTaks extends StatelessWidget {
                     ),
                     FormBuilderCheckbox(
                       name: 'isComplete',
+                      enabled: !_.task.isComplete,
                       title: RichText(
                         text: TextSpan(
                           children: [
@@ -82,7 +85,7 @@ class AddEditTaks extends StatelessWidget {
           floatingActionButton: FloatingActionButton(
             backgroundColor: mainColor,
             child: Icon(FeatherIcons.save),
-            onPressed: (){},
+            onPressed: _.task.isComplete? null: _.saveHandler,
           )
         );
       },
