@@ -11,6 +11,7 @@ class GlobalController extends GetxController {
 
   void deleteUser() {
     _storage.remove('user');
+    _storage.erase();
   }
 
   User getUser() {

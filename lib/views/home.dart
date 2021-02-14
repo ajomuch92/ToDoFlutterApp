@@ -23,10 +23,7 @@ class Home extends StatelessWidget {
             appBarController: _.appBarController,
             searchHint: "Search...",
             mainTextColor: Colors.white,
-            onChange: (String value) {
-              //Your function to filter list. It should interact with
-              //the Stream that generate the final list
-            },
+            onChange: _.searchChange,
             mainAppBar: AppBar(
               title: Text('To Do App'),
               centerTitle: true,
@@ -51,24 +48,29 @@ class Home extends StatelessWidget {
               children: [
                 Text('Welcome ${_.currentUser.name}', style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold), maxLines: 3,),
                 SizedBox(height: 10.0,),
-                Expanded(
-                  child: PagedListView<int, Task>(
-                    pagingController: _.pagingController, 
-                    builderDelegate: PagedChildBuilderDelegate<Task>(
-                      itemBuilder: (context, item, index) => TaskTile(
-                        task: item, 
-                        onTap: (){
-                          _.showDetails(item);
-                        },
-                        onDeleteTap: (){
-                          _.deleteTask();
-                        },
-                        onEditTap: (){
-                          _.editTaks(item);
-                        },
+                GetBuilder<HomeController>(
+                  id: 'list',
+                  builder: (_) {
+                    return Expanded(
+                      child: PagedListView<int, Task>(
+                        pagingController: _.pagingController, 
+                        builderDelegate: PagedChildBuilderDelegate<Task>(
+                          itemBuilder: (context, item, index) => TaskTile(
+                            task: item, 
+                            onTap: (){
+                              _.showDetails(item);
+                            },
+                            onDeleteTap: (){
+                              _.deleteTask(item);
+                            },
+                            onEditTap: (){
+                              _.editTaks(item);
+                            },
+                          ),
+                        )
                       ),
-                    )
-                  ),
+                    );
+                  }
                 )
               ],
             ),

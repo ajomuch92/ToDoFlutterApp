@@ -14,11 +14,17 @@ class Task {
     id: json['uid']
   );
   
+  factory Task.fromNewOrEditableJson(Map<String, dynamic> json) => Task(
+    description: json['description'],
+    title: json['title'],
+    isComplete: json['isComplete'] as bool,
+  );
+  
   factory Task.fromJsonAndUid(Map<String, dynamic> json, String uid) => Task(
     description: json['description'],
     title: json['title'],
     ownerUid: json['ownerUid'],
-    finishedDate: DateTime.tryParse(json['finishedDate']),
+    finishedDate: DateTime.tryParse(json['finishedDate'].toString()??''),
     isComplete: json['isComplete'] as bool,
     id: uid
   );

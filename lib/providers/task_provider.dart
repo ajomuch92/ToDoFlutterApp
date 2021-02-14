@@ -60,19 +60,24 @@ class TaskProvider {
     return _result;
   }
 
-  Future<ResponseResult> getTasksV2(User user, int page, int size) async{
+  Future<ResponseResult> getTasksV2(User user, int page, int size, dynamic last) async{
     try {
-      QuerySnapshot query = await _taskCollection
-        // .where('ownerUid', isEqualTo: user.uuid)
-        // .startAfter([page])
-        // .limit(size)
-        .get();
+      var _query = _taskCollection
+        .where('ownerUid', isEqualTo: user.uuid)
+        .limit(size);
+      if(last != null) {
+        _query = _query.startAfterDocument(last);
+      }
+      QuerySnapshot query = await _query.get();
       List<Task> list = [];
       query.docs.forEach((doc) {
         dynamic data = doc.data();
         list.add(Task.fromJsonAndUid(data, doc.id));
       });
-      _result.result = list;
+      _result.result = {
+        'list': list,
+        'last': query.docs[query.docs.length - 1]
+      };
       _result.code = 200;
     } catch(error) {
       _result.code = 500;
